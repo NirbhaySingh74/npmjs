@@ -1,52 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const SearchPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get("term") || "";
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSearch = async () => {
-    if (!searchTerm) return;
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!searchTerm) return;
+      setLoading(true);
+      setError("");
 
-    setLoading(true);
-    setError("");
-    try {
-      const response = await axios.get(
-        `https://registry.npmjs.org/-/v1/search?text=${searchTerm}`
-      );
-      setResults(response.data.objects);
-    } catch (err) {
-      setError("Failed to fetch data. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const response = await axios.get(
+          `https://registry.npmjs.org/-/v1/search?text=${searchTerm}`
+        );
+        setResults(response.data.objects);
+      } catch (err) {
+        setError("Failed to fetch data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, [searchTerm]);
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">
-        Search NPM Packages
+      <h1 className="text-3xl font-bold mb-6">
+        Search Results for "{searchTerm}"
       </h1>
-      <div className="flex justify-center mb-4">
-        <input
-          type="text"
-          className="border border-gray-300 rounded-md p-2 w-1/2"
-          placeholder="Enter package name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-500 text-white rounded-md px-4 ml-2"
-        >
-          Search
-        </button>
-      </div>
 
       {loading && <div className="text-center">Loading...</div>}
       {error && <div className="text-red-500 text-center">{error}</div>}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {results.map((pkg) => (
           <div key={pkg.package.name} className="border rounded-md p-4">
