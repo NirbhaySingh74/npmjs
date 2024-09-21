@@ -30,7 +30,9 @@ const PackageDetailPage: React.FC = () => {
 
   const latestVersion = packageData["dist-tags"].latest;
   const packageInfo = packageData.versions[latestVersion];
-
+  console.log("repo", packageInfo.repository.url);
+  const repositoryUrl = packageInfo.repository.url;
+  const cleanedUrl = repositoryUrl.replace(/^git\+/, "");
   return (
     <div className="max-w-7xl mx-auto p-6">
       {/* Header Section */}
@@ -95,12 +97,12 @@ const PackageDetailPage: React.FC = () => {
           </pre>
           <h3 className="text-lg font-bold mt-6">Repository</h3>
           <a
-            href={packageInfo.repository.url}
+            href={cleanedUrl}
             className="text-blue-600"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {packageInfo.repository.url}
+            {cleanedUrl}
           </a>
         </div>
         <div className="col-span-3">

@@ -1,50 +1,55 @@
-# React + TypeScript + Vite
+# NPMJS Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application built to replicate the core functionality of [npmjs.com](https://www.npmjs.com), allowing users to search for NPM packages, view package details, and explore specific versions of the packages.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Search NPM Packages**: Users can search for NPM packages using the NPM registry API.
+2. **Package Detail Page**: View detailed information about an NPM package, including its name, description, license, and repository link.
+3. **Package Version Page**: Explore specific versions of a package with details about changes and dependencies.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend**: React, TypeScript
+- **State Management**: Zustand
+- **CSS Framework**: Tailwind CSS
+- **Routing**: React Router
+- **API**: Axios for fetching data from the [NPM Registry API](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md)
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+- Node.js (version >= 14)
+- npm or yarn
+
+### Steps to Install
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/NirbhaySingh74/npmjs
+   cd npmjs
+   ```
+2. Install the dependencies:
+
+```bash
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+or
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```
+yarn install
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+3. Run the development server:
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+yarn dev
 ```
